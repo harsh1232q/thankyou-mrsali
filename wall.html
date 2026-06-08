@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You Wall — Mrs Ali · 12SEG1</title>
+  <link rel="stylesheet" href="CSS/style.css">
+  <style>
+    .wall-hero {
+      background: var(--navy);
+      padding: 8rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .wall-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(201,168,76,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(201,168,76,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .wall-hero .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(201,168,76,0.12) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+    .wall-hero-content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .wall-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      color: #fff;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.3s forwards;
+    }
+    .wall-hero h1 em { color: var(--gold-light); }
+    .wall-hero p {
+      color: rgba(255,255,255,0.6);
+      font-size: 1.1rem;
+      font-weight: 300;
+      max-width: 500px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+    .hearts-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 3rem;
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.7s forwards;
+    }
+
+    /* BIG THANK YOU — visible by default */
+    .big-thanks { background: var(--cream); padding: 6rem 2rem; text-align: center; }
+    .big-thanks-inner { max-width: 700px; margin: 0 auto; }
+    .big-thanks h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+      line-height: 1.25;
+    }
+    .big-thanks h2 em { color: var(--gold); }
+    .big-thanks p { font-size: 1.1rem; color: #4b5563; line-height: 1.9; font-weight: 300; margin-bottom: 1rem; }
+    .big-sig { margin-top: 2.5rem; font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy); font-style: italic; }
+    .big-year { font-size: 0.9rem; color: var(--muted); margin-top: 0.25rem; font-style: normal; font-family: 'DM Sans', sans-serif; }
+
+    /* SIGNATURES — visible by default */
+    .signatures-section { background: var(--white); padding: 5rem 2rem; border-top: 1px solid var(--border); }
+    .signatures-inner { max-width: 900px; margin: 0 auto; }
+    .signatures-inner .section-label { text-align: center; margin-bottom: 0.5rem; }
+    .signatures-inner h2 { font-size: 2rem; color: var(--navy); text-align: center; margin-bottom: 3rem; }
+    .sig-grid { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    .sig-pill {
+      background: var(--navy);
+      color: var(--gold-light);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1rem;
+      padding: 10px 22px;
+      border-radius: 100px;
+      /* Visible by default — no opacity:0 */
+      transition: transform 0.3s ease;
+    }
+    .sig-pill:hover { transform: scale(1.05); }
+
+    /* QUICK LINKS */
+    .quicklinks-section { background: var(--cream); padding: 5rem 2rem; border-top: 1px solid var(--border); }
+    .quicklinks-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+    .quicklinks-inner h2 { font-size: 2rem; color: var(--navy); margin-bottom: 0.5rem; }
+    .quicklinks-inner p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; }
+    .ql-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; text-align: left; }
+    a.card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 1.75rem;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    }
+    a.card:hover { box-shadow: 0 8px 32px rgba(15,39,68,0.10); border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+    a.card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--navy); }
+    a.card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+    /* CODE SECTION */
+    .code-section { background: var(--navy); padding: 5rem 2rem; text-align: center; }
+    .code-inner { max-width: 600px; margin: 0 auto; }
+    .code-section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: #fff; margin-bottom: 2rem; }
+    .code-section h2 em { color: var(--gold-light); font-style: italic; }
+    pre {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 16px;
+      padding: 2rem 2.5rem;
+      text-align: left;
+      overflow-x: auto;
+    }
+    code { font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; line-height: 1.9; color: var(--gold-light); white-space: pre; }
+    code .kw  { color: #79b8ff; }
+    code .str { color: #9ecbff; }
+    code .num { color: #f97583; }
+    code .fn  { color: #b392f0; }
+    code .cm  { color: rgba(255,255,255,0.35); font-style: italic; }
+
+    #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+  </style>
+</head>
+<body>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">Mrs Ali</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="learned.html">What We Learned</a></li>
+      <li><a href="wall.html" class="active">Thank You</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="wall-hero">
+    <div class="hero-dots"></div>
+    <div class="wall-hero-content">
+      <div class="badge" style="opacity:0;animation:fadeUp 0.8s ease 0.1s forwards;">Thank You Wall</div>
+      <h1>Thank you,<br><em>Mrs Ali</em></h1>
+      <p>From every student in 12SEG1 with gratitude, and appreciation.</p>
+      <div class="hearts-row">🌟 🌟 🌟 🌟 🌟</div>
+    </div>
+  </section>
+
+  <!-- BIG MESSAGE -->
+  <section class="big-thanks">
+    <div class="big-thanks-inner">
+      <div class="section-label">Our final words</div>
+      <h2>Thank you for your <em>dedication,</em><br>patience, and support.</h2>
+      <p>Throughout our Software Engineering journey across Year 11 and Year 12, you were always there. Every question answered, every concept re-explained, every moment of encouragement which it all made a difference.</p>
+      <p>We are grateful for everything you have taught us and we wish you all the very best. You deserve it more than anyone.</p>
+      <div class="big-sig">— 12SEG1, 2026 </div>
+      <div class="big-year">BBHS Software Engineering</div>
+    </div>
+  </section>
+
+  <!-- SIGNATURES -->
+  <section class="signatures-section">
+    <div class="signatures-inner">
+      <div class="section-label">Signed by the class</div>
+      <h2>12SEG1 ✍️</h2>
+      <div class="sig-grid">
+        <div class="sig-pill">Harshit</div>
+        <div class="sig-pill">Ashams</div>
+        <div class="sig-pill">Deepansh</div>
+        <div class="sig-pill">Arjay </div>
+        <div class="sig-pill">Ayman</div>
+        <div class="sig-pill">Raamiz </div>
+        <div class="sig-pill">Ismail </div>
+        <div class="sig-pill">Abdullah</div>
+        <div class="sig-pill">Mohnish</div>
+        <div class="sig-pill">Manian</div>
+        <div class="sig-pill">Yu Xiang Yu</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK LINKS -->
+  <section class="quicklinks-section">
+    <div class="quicklinks-inner">
+      <h2>Explore more</h2>
+      <p>There's more to see on this site.</p>
+      <div class="ql-grid">
+        <a href="learned.html" class="card">
+          <h3>💬 Our Class Appreciation</h3>
+          <p>Short reflections from students on what they took away from two years with Mrs Ali.</p>
+        </a>
+        <a href="wall.html" class="card">
+          <h3>💬 Thank You Wall</h3>
+          <p>A final message of appreciation and gratitude from our class.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CODE SECTION -->
+  <section class="code-section">
+    <div class="code-inner">
+      <h2>One <em>Last Program...</em></h2>
+      <pre><code><span class="kw">class</span> <span class="fn">MrsAli</span>:
+    patience    = <span class="fn">float</span>(<span class="str">"infinity"</span>)
+    knowledge   = <span class="num">100</span>
+    dedication  = <span class="num">100</span>
+
+    <span class="kw">def</span> <span class="fn">teach</span>(self, student):
+        <span class="kw">return</span> student.confidence * self.patience
+
+<span class="cm"># Run every day for 2 years</span>
+<span class="kw">for</span> year <span class="kw">in</span> [<span class="str">"Year 11"</span>, <span class="str">"Year 12"</span>]:
+    MrsAli().teach(<span class="str">"12SEG1"</span>)
+
+<span class="fn">print</span>(<span class="str">"Thank you, Mrs Ali!"</span>)</code></pre>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    Made with appreciation by <span>12SEG1</span> &nbsp;·&nbsp; BBHS &nbsp;·&nbsp; 2026
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, colors: ['#c9a84c', '#0f2744', '#e8c97a', '#ffffff'] });
+      }, 800);
+    });
+  </script>
+
+</body>
+</html>

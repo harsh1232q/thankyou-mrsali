@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You, Mrs Ali — 12SEG1</title>
+  <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">Mrs Ali</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="learned.html">What We Learned</a></li>
+      <li><a href="wall.html">Thank You</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-dots"></div>
+    <div class="hero-content">
+      <div class="badge">From class 12SEG1 &nbsp;·&nbsp; BBHS</div>
+      <h1>Thank you,<br><em>Mrs Ali</em></h1>
+      <p class="hero-sub">From Year 11 to Year 12, thank you for guiding us through Software Engineering.</p>
+      <p class="hero-tagline">"Two years. One incredible teacher."</p>
+      <div class="stars-row">
+        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="hero-nav-btns">
+        <a href="learned.html" class="btn btn-primary">What We Learned</a>
+        <a href="wall.html" class="btn btn-outline">Thank You Wall</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll down</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- LETTER MESSAGE -->
+  <section class="message-section">
+    <div class="message-inner" id="message">
+      <div class="section-label">A message from the class</div>
+      <h2>Dear <em>Mrs Ali,</em></h2>
+      <div class="letter">
+        <p class="salutation">To Mrs Ali,</p>
+        <p>Thank you for all the time, patience, and effort you've put into teaching us over the last two years. This website is a small gift of our appreciation from the entire 12SEG1 class.</p>
+        <p>You made Software Engineering feel like something we could actually do. From the moments when we were completely lost, to the moments when things finally cmae in mind that you were always there, always patient, always ready to explain it one more time.</p>
+        <p>We are grateful for everything you have taught us, not just in software, but in how to think, how to solve problems, and how to keep going even when it gets hard.</p>
+        <p><strong>Thank you, Mrs Ali. We won't forget it.</strong></p>
+        <p class="closing">With appreciation,<br>— Class 12SEG1, 2026 ❤️</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK LINKS -->
+  <section class="links-section">
+    <h2>Explore the site</h2>
+    <p class="links-sub">There's more to see go check out the other pages.</p>
+    <div class="links-grid">
+
+      <a href="learned.html" class="link-card" id="lc1">
+        <div class="link-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3>What We Learned</h3>
+        <p>See short reflections from students on what they took away.</p>
+        <span class="arrow">Explore →</span>
+      </a>
+
+      <a href="wall.html" class="link-card" id="lc2">
+        <div class="link-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Thank You Wall</h3>
+        <p>A final tribute page with signatures from the whole class and a celebration.</p>
+        <span class="arrow">See the wall →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    Made with appreciation by <span>12SEG1</span> &nbsp;·&nbsp; BBHS &nbsp;·&nbsp; 2026
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(els => {
+      els.forEach(el => { if (el.isIntersecting) { el.target.classList.add('visible'); observer.unobserve(el.target); } });
+    }, { threshold: 0.1 });
+
+    ['message', 'lc1', 'lc2'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>

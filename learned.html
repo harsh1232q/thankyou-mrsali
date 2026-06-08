@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What We Learned — Mrs Ali · 12SEG1</title>
+  <link rel="stylesheet" href="CSS/style.css">
+  <style>
+    .learned-hero {
+      background: var(--navy);
+      padding: 8rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .learned-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 60% at 80% 50%, rgba(201,168,76,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 10% 50%, rgba(201,168,76,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .learned-hero .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(201,168,76,0.12) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+    .learned-hero-content { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+
+    .learned-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: #fff;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.3s forwards;
+    }
+
+    .learned-hero h1 em { color: var(--gold-light); }
+
+    .learned-hero p {
+      color: rgba(255,255,255,0.6);
+      font-size: 1.05rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+
+    /* STICKY NOTES GRID */
+    .notes-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .notes-section .section-label {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .notes-section h2 {
+      font-size: 2rem;
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .notes-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .note {
+      background: var(--white);
+      border-radius: 4px 16px 16px 16px;
+      padding: 2rem 1.75rem;
+      position: relative;
+      border-top: 5px solid var(--gold);
+      box-shadow: 0 2px 20px rgba(15,39,68,0.08);
+      opacity: 0;
+      transform: translateY(24px) rotate(-0.5deg);
+      transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.25s ease;
+    }
+
+    .note:nth-child(even) {
+      transform: translateY(24px) rotate(0.5deg);
+      border-top-color: var(--navy-mid);
+    }
+
+    .note:nth-child(3n) {
+      border-top-color: #4a7c59;
+    }
+
+    .note.visible {
+      opacity: 1;
+      transform: translateY(0) rotate(-0.5deg);
+    }
+
+    .note:nth-child(even).visible {
+      transform: translateY(0) rotate(0.5deg);
+    }
+
+    .note:nth-child(3n).visible {
+      transform: translateY(0) rotate(0deg);
+    }
+
+    .note:hover {
+      box-shadow: 0 8px 32px rgba(15,39,68,0.14);
+      transform: translateY(-4px) rotate(0deg) !important;
+    }
+
+    .note-quote {
+      font-size: 2rem;
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .note:nth-child(even) .note-quote { color: var(--navy-mid); }
+    .note:nth-child(3n) .note-quote { color: #4a7c59; }
+
+    .note p {
+      font-size: 0.97rem;
+      line-height: 1.75;
+      color: #374151;
+      font-style: italic;
+      margin-bottom: 1.25rem;
+    }
+
+    .note-author {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--navy);
+      font-style: normal;
+      letter-spacing: 0.03em;
+    }
+
+    /* CATEGORIES */
+    .categories {
+      background: var(--white);
+      padding: 5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .categories-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .categories h2 {
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .categories-sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 3rem;
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .cat-card {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 1.75rem 1.5rem;
+      border: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .cat-card.visible { opacity: 1; transform: translateY(0); }
+
+    .cat-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .cat-card h3 {
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .cat-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="nav-logo">Mrs Ali</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="learned.html" class="active">What We Learned</a></li>
+      <li><a href="wall.html">Thank You</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="learned-hero">
+    <div class="hero-dots"></div>
+    <div class="learned-hero-content">
+      <div class="badge" style="opacity:0;animation:fadeUp 0.8s ease 0.1s forwards;">What We Learned</div>
+      <h1>The impact<br><em>Mrs Ali</em> made</h1>
+      <p>From programming to problem-solving, here's what 12SEG1 took away from two years of Software Engineering of your class.</p>
+    </div>
+  </section>
+
+  <!-- STICKY NOTES -->
+  <section class="notes-section">
+    <div class="section-label">Student reflections</div>
+    <h2>In our own words</h2>
+    <p class="notes-sub">Short messages from students about what they learned and how Mrs Ali helped us develop skills and knowledge.</p>
+
+    <div class="notes-grid">
+
+      <div class="note">
+        <div class="note-quote">"</div>
+        <p>Thank you, Mrs Ali, for teaching me throughout Year 11 and Year 12. Your clear explanations and patience helped me understand the content and perform well in my assessments. I appreciate all the support and effort you put into helping our class succeed. Wishing you all the best for the future!</p>
+        <span class="note-author">— Harshit</span>
+      </div>
+
+      <div class="note">
+        <div class="note-quote">"</div>
+        <p>Mrs Ali, thank you for teaching us throughout Years 11 and 12. Your clear explanations, patience, and encouragement helped us grow not only in our subjects but as students. The support and effort you put into each of us made a real difference. It has been a pleasure having you as a teacher., and we will always look back on your class with fondness. We wish you all the best as you embark on the next chapter of your journey. </p>
+        <span class="note-author">— Ashams</span>
+      </div>
+
+      <div class="note">
+        <div class="note-quote">"</div>
+        <p>Thank you for guiding us throughout Years 11 and 12. Your support, patience, and encouragement have helped us grow not only in Software Engineering but also as students. I am grateful for all the knowledge and advice you shared with us over the past two years. It has been a pleasure having you as a teacher, and I wish you all the very best in the next chapter of your journey.</p>
+        <span class="note-author">— Manian</span>
+      </div>
+
+      <div class="note">
+        <div class="note-quote">"</div>
+        <p>Thank you, Mrs Ali, for everything you have taught me this year. I have learned so much in your class, and your support has helped me become more confident in my learning. I will always appreciate your kindness and encouragement. Wishing you all the best for the future!</p>
+        <span class="note-author">— Deepansh</span>
+      </div>
+
+      <div class="note">
+        <div class="note-quote">"</div>
+        <p>Thank you Mrs Ali for being such an amazing teacher throughout Years 11 and 12. Your support, kindness, and dedication made every lesson enjoyable and helped me gain not only knowledge but also confidence in software engineering. I’m truly grateful for everything you’ve taught me and the encouragement you’ve given me. Wishing you all the happiness and good luck for your future.</p>
+        <span class="note-author">— Mohnish</span>
+      </div>
+
+      <div class="note">
+        <div class="note-quote">"</div>
+        <p>I came into Year 11 genuinely thinking software wasn't for me. I struggled with the concepts, didn't understand the code, and honestly considered giving up. But Mrs Ali never let that happen. She kept encouraging us, kept pushing us forward, and by the end of Year 12 I actually knew what I was doing. That transformation is all because of her.</p>
+        <span class="note-author">— Raamiz</span>
+      </div>
+
+      <div class="note">
+        <div class="note-quote">"</div>
+        <p>Thank you for being our software engineering teacher Mrs Ali. You taught us many important life skills like problem solving and critical thinking. We wish you luck on your future endeavours.</p>
+        <span class="note-author">— Eric</span>
+      </div>
+
+      <div class="note">
+        <div class="note-quote">"</div>
+        <p>Mrs Ali made every lesson feel worth showing up to. Even when the work was hard and we had no idea what was going on, she always found a way to break it down and make it make sense. She never made you feel bad for not understanding, she just explained it again, in a different way, until it we understood.</p>
+        <span class="note-author">— Arjay</span>
+      </div>
+
+      <div class="note">
+        <div class="note-quote">"</div>
+        <p>Thank you for believing in us even when we didn't believe in ourselves. That pushed me further than anything else.</p>
+        <span class="note-author">— Ayman</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <div class="categories-inner">
+      <div class="section-label">Skills gained</div>
+      <h2>What Mrs Ali heled us with</h2>
+      <p class="categories-sub">Beyond the HSC; the real things we're taking with us.</p>
+      <div class="cat-grid">
+
+        <div class="cat-card" id="cc1">
+          <div class="cat-icon">💻</div>
+          <h3>Programming</h3>
+          <p>How to write, read, and debug code with confidence even though you might occur an error.</p>
+        </div>
+
+        <div class="cat-card" id="cc2">
+          <div class="cat-icon">🧠</div>
+          <h3>Problem solving</h3>
+          <p>Breaking down complex problems into manageable steps through the use of algorithms.</p>
+        </div>
+
+        <div class="cat-card" id="cc3">
+          <div class="cat-icon">📐</div>
+          <h3>System design</h3>
+          <p>DFDs, structure charts, and how to plan a real system to help show the relationships between different components.</p>
+        </div>
+
+        <div class="cat-card" id="cc4">
+          <div class="cat-icon">💪</div>
+          <h3>Resilience</h3>
+          <p>To keep going even when the code doesn't work and make sure that you understand the underlying concepts.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    Made with appreciation by <span>12SEG1</span> &nbsp;·&nbsp; BBHS &nbsp;·&nbsp; 2026
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(els => {
+      els.forEach(el => { if (el.isIntersecting) { el.target.classList.add('visible'); observer.unobserve(el.target); } });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.note, .cat-card').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
